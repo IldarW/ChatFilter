@@ -95,9 +95,9 @@ public class ChatFilter implements WurmClientMod, Initable{
                         hud.consoleOutput(usage);
                         return true;
                     }
-                    StringBuilder key = new StringBuilder();
-                    for(int i = 3; i < data.length; i++)
-                        key.append(data[i]);
+                    StringBuilder key = new StringBuilder(data[3]);
+                    for(int i = 4; i < data.length; i++)
+                        key.append(" " + data[i]);
                     filters.add((tab, message) -> {
                         if(tab.equals(data[2]))
                             return Pattern.matches(".*"+key+".*", message);
