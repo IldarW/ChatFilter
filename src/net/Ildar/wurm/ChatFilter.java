@@ -37,7 +37,7 @@ public class ChatFilter implements WurmClientMod, Initable{
                     "addText",
                     "(Ljava/lang/String;Ljava/util/List;Z)V",
                     () -> ((proxy, method, args) -> {
-                        if (filterMessage((String)args[0], (String)args[1])) {
+                        if (filterMessage((String)args[0], args[1])) {
                             return null;
                         } else
                             return method.invoke(proxy, args);
@@ -46,7 +46,7 @@ public class ChatFilter implements WurmClientMod, Initable{
                     "addText",
                     "(Ljava/lang/String;Ljava/lang/String;FFFZ)V",
                     () -> ((proxy, method, args) -> {
-                        if (filterMessage((String)args[0], (String)args[1])) {
+                        if (filterMessage((String)args[0], args[1])) {
                             return null;
                         } else
                             return method.invoke(proxy, args);
@@ -62,7 +62,9 @@ public class ChatFilter implements WurmClientMod, Initable{
 
     private boolean filterMessage(String tab, Object input) {
         String message;
-        if (input instanceof List) {
+        if (filters.size() == 0)
+            return false;
+        if (input instanceof List || input instanceof ArrayList) {
             StringBuilder sb = new StringBuilder();
             for (Iterator<MulticolorLineSegment> iter = ((List)input).iterator(); iter.hasNext(); ) {
                 MulticolorLineSegment segment = iter.next();
